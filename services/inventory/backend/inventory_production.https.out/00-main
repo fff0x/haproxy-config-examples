@@ -1,0 +1,12 @@
+mode        http
+description 5Minds inventory
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server inventory-1 inventarsystem-1.5minds.intern:443 observe layer7 check ssl verify none
+

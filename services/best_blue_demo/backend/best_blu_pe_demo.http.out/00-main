@@ -1,0 +1,11 @@
+mode        http
+description Best-Blue demo pe
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server best-blu-demo best-blu-demo.5minds.intern:80 check

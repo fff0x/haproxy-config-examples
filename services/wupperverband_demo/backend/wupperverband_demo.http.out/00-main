@@ -1,0 +1,11 @@
+mode        http
+description Wupperverband demo
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server wupperverband-demo 192.168.1.181:80 check

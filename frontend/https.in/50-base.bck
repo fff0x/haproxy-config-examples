@@ -1,0 +1,23 @@
+# -- GLOBAL --
+# Add header with openssl verify return/error code if custom request header 'X-TLS-Debug' is set.
+http-request early-hint link "OPENSSL-VERIFY-RC: %{+Q}[ssl_c_verify]" if tls_debug
+
+# Deny access if certificate is not valid
+http-request deny if { ssl_c_used } tls_crt_expired # Certificate expired
+http-request deny if { ssl_c_used } tls_crl_expired # CRL expired
+http-request deny if { ssl_c_used } tls_crt_revoked # Certificate revoked
+http-request deny if { ssl_c_used } tls_crt_unsupported_purpose # Not a client certificate, see 'extended key usage' of certificate
+http-request deny if { ssl_c_used } !tls_crt_valid  # Unspecific error
+
+# --- Client certificate error handling ---
+#use_backend cli-ssl-expired.http.out if tls_crt_expired
+#use_backend cli-ssl-revoked.http.out if tls_crt_revoked
+#use_backend cli-ssl-error.http.out unless { ssl_c_verify 0 }
+
+# jfrog/Artifactory
+use_backend artifactory_production.https.out if is_wan is_artifactory_prod
+use_backend artifactory_production.https.out if is_lan is_artifactory_prod
+
+# Examples for different backends (http method, tls client cert provided)
+# use_backend secure_backend_wan.http.out if is_wan is_http_get
+# use_backend secure_backend_lan.http.out if is_lan { ssl_c_used }

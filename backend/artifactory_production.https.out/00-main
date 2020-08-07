@@ -1,0 +1,11 @@
+mode        http
+description jfrog Artifactory repository server
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server artifactory-1 artifactory-1.5minds.intern:443 observe layer7 check ssl verify none

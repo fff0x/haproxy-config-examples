@@ -1,0 +1,22 @@
+log /dev/log local0 info # Log to systemd journal
+daemon                   # Operation mode
+
+# Create a unix domain socket for stats requests/checks
+stats socket /run/haproxy/haproxy_admin.sock mode 666 level admin
+stats timeout 30s
+
+# Performance
+maxconn 256000 # Maximum per-process number of concurrent connections
+
+# Security
+user  haproxy
+group lb
+tune.ssl.default-dh-param 4096
+
+# SSL specific
+ca-base /data/etc/pki/haproxy/trust
+crt-base /data/etc/pki/haproxy/certs
+ssl-default-bind-options ssl-min-ver TLSv1.2
+ssl-default-bind-ciphers EECDH+AESGCM:EDH+AESGCM
+ssl-default-server-options ssl-min-ver TLSv1.2
+ssl-default-server-ciphers EECDH+AESGCM:EDH+AESGCM

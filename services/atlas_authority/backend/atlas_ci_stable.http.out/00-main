@@ -1,0 +1,11 @@
+mode        http
+description Atlas CI
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server atlas-test-1 atlas-test-1.5minds.intern:9144 check

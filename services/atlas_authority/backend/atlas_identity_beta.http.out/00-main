@@ -1,0 +1,11 @@
+mode        http
+description Atlas identity
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server atlas-test-2 atlas-test-2.5minds.intern:9133 check

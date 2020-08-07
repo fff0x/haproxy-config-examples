@@ -1,0 +1,14 @@
+# Stable
+use_backend atlas_identity_stable.http.out if is_atlas_stable is_atlas_identity is_5minds_ext_def
+use_backend atlas_engine_stable.http.out   if is_atlas_stable is_atlas_engine   is_5minds_ext_def
+use_backend atlas_ci_stable.http.out       if is_atlas_stable is_atlas_ci       is_5minds_ext_def
+
+# Beta
+use_backend atlas_identity_beta.http.out   if is_atlas_beta   is_atlas_identity is_5minds_ext_def
+use_backend atlas_engine_beta.http.out     if is_atlas_beta   is_atlas_engine   is_5minds_ext_def
+use_backend atlas_ci_beta.http.out         if is_atlas_beta   is_atlas_ci       is_5minds_ext_def
+
+# Alpha
+use_backend atlas_identity_alpha.http.out  if is_atlas_alpha  is_atlas_identity is_5minds_ext_def
+use_backend atlas_engine_alpha.http.out    if is_atlas_alpha  is_atlas_engine   is_5minds_ext_def
+use_backend atlas_ci_alpha.http.out        if is_atlas_alpha  is_atlas_ci       is_5minds_ext_def

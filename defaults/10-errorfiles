@@ -1,0 +1,7 @@
+errorfile 400 /data/haproxy/errors/400.http
+errorfile 403 /data/haproxy/errors/403.http
+errorfile 408 /data/haproxy/errors/408.http
+errorfile 500 /data/haproxy/errors/500.http
+errorfile 502 /data/haproxy/errors/502.http
+errorfile 503 /data/haproxy/errors/503.http
+errorfile 504 /data/haproxy/errors/504.http

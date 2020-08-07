@@ -1,0 +1,24 @@
+mode        http
+bind        0.0.0.0:443 ssl crt /data/etc/pki/haproxy/certs/_.5minds.intern-bundle.pem crt /data/etc/pki/haproxy/certs
+description HTTPS frontend
+
+# Header
+http-request  set-header X-Forwarded-Proto https
+http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
+http-response set-header X-Content-Type-Options nosniff
+
+# Logging
+log global
+
+# Options
+option  httplog
+option  logasap
+option  dontlognull
+option forwardfor header X-Real-IP
+
+# Request
+capture request header Host len 50
+
+# Compression
+compression algo gzip
+compression type text/html text/plain text/css text/comma-separated-values text/javascript application/x-javascript application/atom+xml

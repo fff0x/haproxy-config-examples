@@ -1,0 +1,9 @@
+# -- ACL --
+# Branch
+acl is_atlas_stable hdr_reg(host) -i ^atlas-.*-stable.*$
+acl is_atlas_beta   hdr_reg(host) -i ^atlas-.*-beta.*$
+acl is_atlas_alpha  hdr_reg(host) -i ^atlas-.*-alpha.*$
+# --
+acl is_atlas_identity hdr_reg(host) -i ^atlas-identity-.*$
+acl is_atlas_engine hdr_reg(host) -i ^atlas-engine-.*$
+acl is_atlas_ci     hdr_reg(host) -i ^atlas-ci-.*$

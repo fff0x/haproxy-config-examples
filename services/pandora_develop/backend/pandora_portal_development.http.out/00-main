@@ -1,0 +1,11 @@
+mode        http
+description Pandora portal
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server pandora-1 pandora-develop-process-engine.5minds.intern:8082 check

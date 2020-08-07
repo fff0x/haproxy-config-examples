@@ -1,0 +1,4 @@
+# -- ACL --
+acl is_inventory_prod hdr_dom(host) -i portal.inventar.5minds.cloud
+acl is_inventory_prod hdr_dom(host) -i guis.inventar.5minds.cloud
+acl is_inventory_prod hdr_dom(host) -i process-engine.inventar.5minds.cloud

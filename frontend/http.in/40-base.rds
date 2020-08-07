@@ -1,0 +1,2 @@
+# Redirect http -> https for all connections, except websockets and explicit http services
+redirect scheme https if !{ ssl_fc } !is_websocket

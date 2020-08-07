@@ -1,0 +1,6 @@
+# Default timeouts
+timeout connect 10s # Maximum time to wait for a connection attempt to a server to succeed
+timeout queue   10s # Maximum time to wait in the queue for a connection slot to be free
+timeout server  50s # Maximum inactivity time on the server side
+timeout client  50s # Maximum inactivity time on the client side
+timeout tunnel  1h  # Maximum inactivity time on the client and server side for tunnels

@@ -1,0 +1,11 @@
+mode        http
+description Atlas engine
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server atlas-test-3 atlas-test-3.5minds.intern:9111 check

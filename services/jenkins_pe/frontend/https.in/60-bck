@@ -1,0 +1,2 @@
+use_backend jenkins_pe_production.https.out if is_wan is_jenkins_pe_prod
+use_backend jenkins_pe_production.https.out if is_lan is_jenkins_pe_prod

@@ -1,0 +1,20 @@
+mode           http
+bind           0.0.0.0:80
+description    HTTP frontend
+
+# Timeout
+timeout client 5s
+
+# Header
+http-request set-header X-Forwarded-Proto https
+
+# Logging
+log global
+
+# Options
+option  httplog
+option  logasap
+option  dontlognull
+
+# Request
+capture request header Host len 50

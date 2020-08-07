@@ -1,0 +1,7 @@
+# Currently, websockets are still reachable without TLS.
+# Everything else is redirected to https..
+
+# --- Websocket ---
+acl is_websocket hdr(Upgrade)  -i WebSocket
+acl is_websocket hdr_beg(host) -i ws.
+acl is_websocket path_beg         /socket.io

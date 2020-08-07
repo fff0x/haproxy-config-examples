@@ -1,0 +1,13 @@
+mode            tcp
+bind            0.0.0.0:35005
+description     Atlas reserved (stable)
+timeout server  3h
+timeout client  3h
+timeout connect 20s
+
+# Logging
+log    global
+option tcplog
+
+# Server
+server atlas-test-1 atlas-test-1.5minds.intern:9155 check
