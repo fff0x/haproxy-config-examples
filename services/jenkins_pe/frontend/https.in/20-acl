@@ -1,3 +1,0 @@
-# -- ACL --
-acl is_jenkins_pe_prod hdr_sub(host) -i jenkins-pe
-acl is_jenkins_pe_prod hdr_sub(host) -i jenkins-pe

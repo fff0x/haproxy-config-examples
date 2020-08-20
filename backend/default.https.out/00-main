@@ -8,4 +8,4 @@ option forwardfor
 log global
 
 # Server
-server default-1 default.this-is-fine.intern:443 observe layer7 check ssl verify none
+server default-1 127.0.0.1:443 observe layer7 check ssl verify none

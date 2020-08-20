@@ -1,3 +1,0 @@
-use_backend best_blu_portal_demo.http.out   if is_best_blue_portal   is_best_blue_demo
-use_backend best_blu_identity_demo.http.out if is_best_blue_identity is_best_blue_demo
-use_backend best_blu_pe_demo.http.out       if is_best_blue_pe       is_best_blue_demo

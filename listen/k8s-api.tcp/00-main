@@ -12,5 +12,5 @@ capture request header Host len 50
 
 balance roundrobin
 default-server inter 10s downinter 5s rise 2 fall 2
-server k3s-master-1 k3s-master-1:6443 check
-server k3s-master-2 k3s-master-2:6443 check backup
+server k3s-master-1 127.0.0.1:6443 check
+server k3s-master-2 127.0.0.1:6443 check backup

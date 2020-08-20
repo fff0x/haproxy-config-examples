@@ -1,0 +1,2 @@
+# Stable
+use_backend example_service_stable.http.out if is_example_stable is_example_service

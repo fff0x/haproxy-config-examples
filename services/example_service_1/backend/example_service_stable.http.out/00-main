@@ -1,0 +1,12 @@
+mode        http
+description Example service
+
+# Options
+option forwardfor
+
+# Logging
+log global
+
+# Server
+server example-service-1 127.0.0.1:80 check
+

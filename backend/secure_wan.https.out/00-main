@@ -28,4 +28,4 @@ http-request deny if { ssl_c_used } !crt_valid  # Unspecific error
 log global
 
 # Server
-server secure-wan-1 secure.this-is-fine.intern:3333 observe layer7 check
+server secure-wan-1 127.0.0.1:3333 observe layer7 check

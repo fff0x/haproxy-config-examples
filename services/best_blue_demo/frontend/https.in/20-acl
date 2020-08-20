@@ -1,7 +1,0 @@
-# -- ACL --
-# Best-Blue branch
-acl is_best_blue_demo hdr_reg(host) -i ^.*-best-blu-demo\..*$
-# --
-acl is_best_blue_portal   hdr_reg(host) -i ^portal-best-blu-.*$
-acl is_best_blue_identity hdr_reg(host) -i ^identity-server-best-blu-.*$
-acl is_best_blue_pe       hdr_reg(host) -i ^process-engine-best-blu-.*$

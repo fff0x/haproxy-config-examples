@@ -1,1 +1,0 @@
-use_backend inventory_production.https.out if is_inventory_prod

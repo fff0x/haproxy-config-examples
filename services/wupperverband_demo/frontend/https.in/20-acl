@@ -1,8 +1,0 @@
-# -- ACL --
-# Branch
-acl is_wupperverband_demo hdr_reg(host) -i ^.*\.wupperverband\.demo\..*$
-# --
-acl is_wupperverband_demo_portal hdr_reg(host)   -i ^portal\.wupperverband\.demo\..*$
-acl is_wupperverband_demo_identity hdr_reg(host) -i ^identity-server\.wupperverband\.demo\..*$
-acl is_wupperverband_demo_engine hdr_reg(host)   -i ^process-engine\.wupperverband\.demo\..*$
-acl is_wupperverband_demo_guis hdr_reg(host)     -i ^guis\.wupperverband\.demo\..*$

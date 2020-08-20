@@ -1,7 +1,0 @@
-# -- ACL --
-# Branch
-acl is_pandora_develop          hdr_reg(host) -i ^pandora-develop.*$
-# --
-acl is_pandora_engine_develop   hdr_sub(host) -i pandora-develop-process-engine
-acl is_pandora_portal_develop   hdr_sub(host) -i pandora-develop-portal
-acl is_pandora_identity_develop hdr_sub(host) -i pandora-develop-identity-server

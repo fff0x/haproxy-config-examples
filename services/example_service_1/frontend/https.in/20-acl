@@ -1,0 +1,7 @@
+# -- ACL --
+# Branch
+acl is_example_stable hdr_reg(host) -i ^example-.*-stable.*$
+acl is_example_beta   hdr_reg(host) -i ^example-.*-beta.*$
+acl is_example_alpha  hdr_reg(host) -i ^example-.*-alpha.*$
+# --
+acl is_example_service hdr_reg(host) -i ^example-service-.*$

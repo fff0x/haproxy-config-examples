@@ -1,6 +1,6 @@
 mode            tcp
-bind            0.0.0.0:36005
-description     Atlas reserved (beta)
+bind            0.0.0.0:35005
+description     Example service
 timeout server  3h
 timeout client  3h
 timeout connect 20s
@@ -10,4 +10,4 @@ log    global
 option tcplog
 
 # Server
-server atlas-test-2 atlas-test-2.5minds.intern:9155 check
+server example-service-1 127.0.0.1:8080 check
