@@ -1,0 +1,53 @@
+mode        http
+bind        abns@tls accept-proxy ssl crt /data/etc/pki/haproxy/certs/ssl-cert-snakeoil crt /data/etc/pki/haproxy/certs ca-file /data/etc/pki/haproxy/trust/haproxy.ca_internal verify optional crt-ignore-err all crl-file /data/etc/pki/haproxy/haproxy.crl_internal
+
+description POC-4 for proxy that accept TLS HTTP traffic
+
+# Timeouts
+timeout server  20s
+timeout queue   50s
+timeout connect 10s
+timeout client  50s
+
+# Logging
+log     global
+option  httplog
+option  logasap
+
+# Request
+capture request header Host len 50
+
+# Compression
+compression algo gzip
+compression type text/html text/plain text/css text/comma-separated-values text/javascript application/x-javascript application/atom+xml application/json
+
+# -- ACL --
+# SSL related
+# Enable TLS debug output in HTTP 103 status code, if custom request header 'X-TLS-Debug' found
+acl tls_debug req.hdr(X-TLS-Debug) -m found
+# For additional error codes see definitions in the openssl
+# include verify header: /usr/include/openssl/x509_vfy.h
+acl tls_crt_expired              ssl_c_verify 10
+acl tls_crl_expired              ssl_c_verify 12
+acl tls_crt_revoked              ssl_c_verify 23
+acl tls_crt_unsupported_purpose  ssl_c_verify 26
+acl tls_crt_valid                ssl_c_verify  0
+acl tls_crt_issued_by_ca         ssl_c_i_dn(cn) -m str THIS_IS_FINE
+# --
+acl is_secure hdr_dom(host) -i secure.this-is-fine.internal
+
+# Add https header only, if we came from an ssl connection
+http-request set-header X-Forwarded-Proto https if { ssl_fc } 
+
+# Add header with openssl verify return/error code if custom request header 'X-TLS-Debug' is set
+http-request early-hint link "OPENSSL-VERIFY-RC: %{+Q}[ssl_c_verify]" if tls_debug
+
+# Deny access if certificate is not valid
+http-request deny if { ssl_c_used } tls_crt_expired # Certificate expired
+http-request deny if { ssl_c_used } tls_crl_expired # CRL expired
+http-request deny if { ssl_c_used } tls_crt_revoked # Certificate revoked
+http-request deny if { ssl_c_used } tls_crt_unsupported_purpose # Not a client certificate, see 'extended key usage' of certificate
+http-request deny if { ssl_c_used } !tls_crt_valid  # Unspecific error
+
+# Server
+use_backend default.https.out if is_secure { ssl_c_used } tls_crt_issued_by_ca

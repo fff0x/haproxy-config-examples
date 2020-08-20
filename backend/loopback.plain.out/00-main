@@ -1,0 +1,3 @@
+mode        tcp
+description POC-3 TLS intercept and routing (non-tls)
+server      loopback-plain abns@plain send-proxy-v2

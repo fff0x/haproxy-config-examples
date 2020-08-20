@@ -1,11 +1,12 @@
 mode        http
-bind        0.0.0.0:443 ssl crt /data/etc/pki/haproxy/certs/_.5minds.intern-bundle.pem crt /data/etc/pki/haproxy/certs
+bind        0.0.0.0:443 ssl crt /data/etc/pki/haproxy/certs/primary.pem crt /data/etc/pki/haproxy/certs
 description HTTPS frontend
 
 # Header
 http-request  set-header X-Forwarded-Proto https
 http-response set-header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload;"
 http-response set-header X-Content-Type-Options nosniff
+#http-response set-header X-Frame-Options DENY
 
 # Logging
 log global

@@ -1,0 +1,3 @@
+mode        tcp
+description POC-2 TLS intercept and routing (tls)
+server      loopback-tls abns@tls send-proxy-v2

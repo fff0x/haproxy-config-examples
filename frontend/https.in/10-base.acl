@@ -4,9 +4,10 @@ acl is_http_post method           POST
 acl is_http_put  method           PUT
 acl is_http_opt  method           OPTIONS
 
-# SSL related
-# Enable TLS debug output in HTTP 103 status code, if custom request header 'X-TLS-Debug' found.
+# --- SSL related ---
+# Enable TLS debug output in "HTTP 103" status code, if custom request header 'X-TLS-Debug' was found
 acl tls_debug req.hdr(X-TLS-Debug) -m found
+
 # For additional error codes see definitions in the openssl include verify header:
 # /usr/include/openssl/x509_vfy.h
 acl tls_crt_expired              ssl_c_verify 10
@@ -25,19 +26,12 @@ acl is_js  hdr_beg(host)       -i js.
 acl is_img hdr_beg(host)       -i img.
 
 # --- Custom ---
-acl is_wan hdr_reg(host) .*\.5minds\.cloud
-acl is_lan hdr_reg(host) .*\.5minds\.intern
+acl is_wan hdr_reg(host) .*\.this-is-fine\.io
+acl is_lan hdr_reg(host) .*\.this-is-fine\.internal
 
-# jfrog/Artifactory
-acl is_artifactory_prod hdr_sub(host) -i artifactory
-acl is_artifactory_prod hdr_dom(host) -i artifactory.5minds.de
-acl is_artifactory_prod hdr_dom(host) -i registry.5minds.cloud
-acl is_artifactory_prod hdr_dom(host) -i artifactory.5minds.cloud
-acl is_artifactory_prod hdr_dom(host) -i artifactory.5minds.intern
-
-# Root zones
-acl is_5minds_ext_root hdr_reg(host) ^5minds\.cloud$
-acl is_5minds_ext_def  hdr_reg(host) ^.*\.5minds\.cloud$
-acl is_5minds_int_root hdr_reg(host) ^5minds\.intern$
-acl is_5minds_int_def  hdr_reg(host) ^.*\.5minds\.intern$
+# --- Root zones ---
+acl is_5minds_ext_root hdr_reg(host) ^this-is-fine\.io$
+acl is_5minds_ext_def  hdr_reg(host) ^.*\.this-is-fine\.io$
+acl is_5minds_int_root hdr_reg(host) ^this-is-fine\.internal$
+acl is_5minds_int_def  hdr_reg(host) ^.*\.this-is-fine\.internal$
 acl is_path_null       path       -i /

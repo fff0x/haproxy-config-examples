@@ -1,0 +1,31 @@
+mode        http
+description Default backend
+
+# Options
+option forwardfor
+
+# Additional ACL
+acl crt_expired ssl_c_verify 10
+acl crt_revoked ssl_c_verify 23
+acl crt_valid   ssl_c_verify  0
+
+# Custom SSL HTTP header
+http-request set-header X-SSL                   %[ssl_fc]
+http-request set-header X-SSL-Client-Verify     %[ssl_c_verify]
+http-request set-header X-SSL-Client-SHA1       %{+Q}[ssl_c_sha1]
+http-request set-header X-SSL-Client-DN         %{+Q}[ssl_c_s_dn]
+http-request set-header X-SSL-Client-CN         %{+Q}[ssl_c_s_dn(cn)]
+http-request set-header X-SSL-Issuer            %{+Q}[ssl_c_i_dn]
+http-request set-header X-SSL-Client-Not-Before %{+Q}[ssl_c_notbefore]
+http-request set-header X-SSL-Client-Not-After  %{+Q}[ssl_c_notafter]
+
+# Deny access rules
+http-request deny if { ssl_c_used } crt_expired # Expired
+http-request deny if { ssl_c_used } crt_revoked # Revoked
+http-request deny if { ssl_c_used } !crt_valid  # Unspecific error
+
+# Logging
+log global
+
+# Server
+server secure-wan-1 secure.this-is-fine.intern:3333 observe layer7 check

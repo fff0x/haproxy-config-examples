@@ -1,0 +1,29 @@
+mode        http
+bind        abns@plain accept-proxy
+description POC-5 for proxy that accept plain HTTP traffic
+
+# Timeouts
+timeout server  20s
+timeout queue   50s
+timeout connect 10s
+timeout client  50s
+
+# Logging
+log     global
+option  httplog
+option  logasap
+
+# Request
+capture request header Host len 50
+
+# Compression
+compression algo gzip
+compression type text/html text/plain text/css text/comma-separated-values text/javascript application/x-javascript application/atom+xml application/json
+
+# -- ACL --
+acl is_http_post     method           POST
+acl is_insecure      hdr_dom(host) -i insecure.this-is-fine.io
+acl is_insecure_path path_reg -i      ^/xxx/yyy$
+
+# Server
+use_backend default.http.out if is_insecure is_insecure_path is_http_post

@@ -1,0 +1,21 @@
+# This configuration will bind on port 6666 and will accept non-TLS and TLS connections,
+# inspect the traffic and forward it according to the type.
+mode        tcp
+bind        0.0.0.0:6666
+description POC-1 for TCP/TLS intercept and routing
+
+# Logging
+log     global
+option  tcplog
+option  logasap
+
+# Request
+capture request header Host len 50
+tcp-request inspect-delay 2s
+tcp-request content accept if { req.ssl_hello_type 1 }
+
+# Use TLS backend (loopback) if SSL handshake found
+use_backend loopback.tls.out if { req.ssl_hello_type 1 }
+
+# Use default backend (loopback) for anything else
+default_backend loopback.plain.out
