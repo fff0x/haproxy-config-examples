@@ -1,0 +1,28 @@
+# This configuration will bind on the port range 6666-7777 and listens for a sequence of port knocks.
+# If the order was correct and no other port was accessed during the sequence,
+# HA-Proxy permit access to the resource.
+# Current port order is: 6666,7777,7776,6667,7775,6668
+mode        tcp
+bind        0.0.0.0:6666-7777
+description POC for TCP port-knocking using sticky-sessions
+
+# Logging
+log     global
+option  tcplog
+option  logasap
+
+stick-table type ip size 1m expire 24h store conn_cnt,gpt0
+
+# Request
+tcp-request connection track-sc0 src
+tcp-request connection sc-set-gpt0(0) 1 if { dst_port 6666 } { sc_get_gpt0(0) -m int lt 6 }
+tcp-request connection sc-set-gpt0(0) 2 if { dst_port 7777 } { sc_get_gpt0(0) -m int eq 1 }
+tcp-request connection sc-set-gpt0(0) 3 if { dst_port 7776 } { sc_get_gpt0(0) -m int eq 2 }
+tcp-request connection sc-set-gpt0(0) 4 if { dst_port 6667 } { sc_get_gpt0(0) -m int eq 3 }
+tcp-request connection sc-set-gpt0(0) 5 if { dst_port 7775 } { sc_get_gpt0(0) -m int eq 4 }
+tcp-request connection sc-set-gpt0(0) 6 if { dst_port 6668 } { sc_get_gpt0(0) -m int eq 5 }
+tcp-request connection sc-set-gpt0(0) 0 unless { dst_port 6666 7777 7776 6667 7775 6668 }
+tcp-request connection silent-drop unless { sc_get_gpt0(0) 6 }
+
+# Grant access to server
+server ssh 127.0.0.1:22
